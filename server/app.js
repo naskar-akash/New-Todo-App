@@ -4,6 +4,7 @@ const todoRouter = require("./routes/todoRouter");
 const db = require("./config/mongoose-connection");
 const cookieParser = require("cookie-parser");
 const path = require("path");
+require("dotenv").config();
 const app = express();
 const port = 3000;
 

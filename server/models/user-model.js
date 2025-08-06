@@ -6,6 +6,12 @@ const userSchema = new mongoose.Schema({
   email: String,
   password: String,
   profilepic: String,
+  todos: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "todo",
+      },
+    ],
 });
 
 module.exports = mongoose.model("user", userSchema);

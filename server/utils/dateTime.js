@@ -1,4 +1,4 @@
-export function dateTime() {
+const  dateTime = () => {
   const dateObj = new Date();
 
   const dd = String(dateObj.getDate()).padStart(2, "");
@@ -13,3 +13,5 @@ export function dateTime() {
     time: `${h}-${m}-${s}`,
   };
 }
+
+module.exports.dateTime = dateTime;
