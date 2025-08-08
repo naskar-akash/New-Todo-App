@@ -66,7 +66,7 @@ const UserReg = () => {
           disabled={isSubmitting}
         />
       </form>
-      <div className="text-md mt-4">
+      <div className="text-orange-500 text-sm mt-4">
         {isSubmitting ? "Creating user..." : ""}
       </div>
     </div>

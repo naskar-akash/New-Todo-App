@@ -54,7 +54,7 @@ const UserLog = () => {
           disabled={isSubmitting}
         />
       </form>
-      <div className="text-md mx-3 my-2">
+      <div className="text-emerald-500 text-sm mt-4">
         {isSubmitting ? "Logging in..." : ""}
       </div>
     </div>
