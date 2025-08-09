@@ -1,8 +1,11 @@
 import React from 'react'
+import { useState } from 'react';
 import { useForm } from "react-hook-form";
 
 const UserReg = () => {
-    const {
+  const [serverMsg, setServerMsg] = useState();
+  const [status, setStatus] = useState();
+  const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -19,12 +22,31 @@ const UserReg = () => {
 
   //submitting
   const onSubmit = async (data) => {
-    await delay(2);
-    console.log(data);
+
+    await delay(1);
+
+    const r = await fetch("http://localhost:3000/user/register", { 
+      method: "POST", 
+      headers: {"Content-Type": "application/json"}, 
+      body: JSON.stringify(data), 
+      credentials: "include"
+    });
+    const response = await r.json();
+
+    setServerMsg(response.message);
+    setStatus(r.ok ?"success":"error");
+
+    //Hide message
+    setTimeout(()=>setServerMsg(""),4000);
   };
+
   
   return (
-    <div className="flex flex-col items-center w-full">
+    <div className="flex flex-col items-center w-full relative">
+
+      {/*Showing flash message*/}
+      {serverMsg && (<div className={`fixed top-[50%] p-6 rounded-lg shadow-lg shadow-zinc-500 text-white transition-transform duration-300 ${status === "success" ? "bg-emerald-500" : "bg-rose-500"}`} style={{left: "50%", transform: "translateX(-50%)"}}>{serverMsg}</div>)}
+
       <h2 className="text-3xl font-bold mb-8 text-blue-600 font-serif">Create Account</h2>
 
       <form

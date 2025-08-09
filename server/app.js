@@ -3,7 +3,8 @@ const userRouter = require("./routes/userRouter");
 const todoRouter = require("./routes/todoRouter");
 const db = require("./config/mongoose-connection");
 const cookieParser = require("cookie-parser");
-const path = require("path");
+const bodyParser = require('body-parser')
+const cors = require("cors")
 require("dotenv").config();
 const app = express();
 const port = 3000;
@@ -12,6 +13,8 @@ const port = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(bodyParser.json());
 
 //connecting routes
 app.use("/user", userRouter);

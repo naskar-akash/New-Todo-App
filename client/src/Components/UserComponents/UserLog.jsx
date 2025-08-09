@@ -1,7 +1,12 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const UserLog = () => {
+    const [serverMsg, setServerMsg] = useState();
+    const [status, setStatus] = useState();
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -19,12 +24,38 @@ const UserLog = () => {
 
   //submitting
   const onSubmit = async (data) => {
-    await delay(2);
-    console.log(data);
+
+    await delay(1);
+
+    const r = await fetch("http://localhost:3000/user/login", { 
+      method: "POST", 
+      headers: {"Content-Type": "application/json"}, 
+      body: JSON.stringify(data), 
+      credentials: "include"
+    });
+    const response = await r.json();
+
+    if (r.ok) {
+      // show success message
+      setServerMsg(response.message);
+      setStatus("success")
+
+      // wait a second for message to appear, then redirect
+      setTimeout(() => {
+        navigate("/todos"); // redirect to todo page
+      }, 2000);
+    } else {
+      setServerMsg(response.message);
+      setStatus("error")
+    }
   };
 
   return (
     <div className="flex flex-col items-center w-full">
+
+      {/*Showing flash message*/}
+      {serverMsg && (<div className={`fixed top-[50%] p-6 rounded-lg shadow-lg shadow-zinc-500 text-white transition-transform duration-300 ${status === "success" ? "bg-green-500" : "bg-red-500"}`} style={{left: "50%", transform: "translateX(-50%)"}}>{serverMsg}</div>)}
+
       <h2 className="text-3xl font-bold mb-8 text-blue-600 font-serif">Login</h2>
 
       <form
