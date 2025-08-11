@@ -20,7 +20,7 @@ const todoSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    required: true
+    default: "Unseen"
   },
   user: [{
     type: mongoose.Schema.Types.ObjectId,

@@ -43,10 +43,11 @@ const UserLog = () => {
       // wait a second for message to appear, then redirect
       setTimeout(() => {
         navigate("/todos"); // redirect to todo page
-      }, 2000);
+      }, 1000);
     } else {
       setServerMsg(response.message);
       setStatus("error")
+      setTimeout(() => setServerMsg(""), 1000);
     }
   };
 

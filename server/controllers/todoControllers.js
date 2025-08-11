@@ -3,22 +3,21 @@ const userModel = require("../models/user-model");
 const { dateTime } = require("../utils/dateTime");
 
 module.exports.createTodos = async (req, res) => {
-  const {todoTitle,todoDesc,status} = req.body;
+  const {todoTitle,todoDesc} = req.body;
    
   try {
     const todo = await todoModel.create({
       todoTitle,
-      todoDesc,
-      status, 
+      todoDesc, 
       user: req.user._id
     });
     await userModel.findByIdAndUpdate(req.user._id, {$push:{todos: todo._id}}, {new: true});
 
     await userModel.findById(req.user._id).populate("todos");
 
-    res.status(201).json(todo);
+    res.status(201).json({message: "Todo added successfully!"});
   } catch (err) {
-     res.status(400).json({ error: err.message });;
+     res.status(400).json({ message: err.message });;
   }
 };
 
