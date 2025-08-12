@@ -1,31 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
+import TodoStatus from "./TodoStatus";
+import { fetchTodos } from "../utility/TodosService";
+
 
 const TodoBody = () => {
   const [todos, setTodos] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3000/todos/", {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch todos");
-        return res.json();
-      })
-      .then((data) => {
-        setTodos(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
+   const response = async () => {
+      try {
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFrYXNoQG1haWwuY29tIiwiaWQiOiI2ODk4YWZjN2U2N2ZmMmE0M2Q3Y2FjMDIiLCJpYXQiOjE3NTUwMTQxMjZ9.P2lHuB9HrvmqM27VezaZiBCP8G_5O3_jPPr4kGCUl2g";
+        if (token) {
+          const todosData = await fetchTodos(token);
+          setTodos(todosData);
+        }
+      } catch (error) {
+        console.error("Error fetching todos:", error);
+      }
+    }
+    response(); 
   }, []);
-
-  if (loading) return <p>Loading...</p>;
 
   return (
     <div className="overflow-y-auto max-h-[75vh]">
@@ -65,14 +61,15 @@ const TodoBody = () => {
                             <p className="font-semibold">{todo.time}</p>
                           </div>
                           <div className="flex justify-end gap-2 pb-3">
-                            <button>
+                            <button onClick={()=>{}}>
                               <MdDeleteOutline className="size-6" />
                             </button>
-                            <button>
+                            <button onClick={()=>{}}>
                               <CiEdit className="size-6" />
                             </button>
                           </div>
                         </div>
+                        <TodoStatus todo={todo}/>
                       </div>
                     </div>
                   </div>

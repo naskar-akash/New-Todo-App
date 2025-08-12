@@ -10,6 +10,7 @@ const Todos = () => {
   return (
     <div>
       <div className="p-2">
+        <button className='px-3 py-2 bg-zinc-500 text-white text-sm font-semibold rounded-md hover:cursor-pointer hover:bg-zinc-400' onClick={() => navigate(-1)}>Back</button>
         <div className="flex flex-wrap justify-between items-center gap-4">
         <h1 className="text-2xl font-bold">My Todos</h1>
         <div className="flex justify-center">
