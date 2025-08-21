@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { CiEdit } from "react-icons/ci";
-import { MdDeleteOutline } from "react-icons/md";
+import TodoDelete from "./TodoDelete";
 import TodoStatus from "./TodoStatus";
-import { fetchTodos } from "../utility/TodosService";
+import TodoUpdate from "./TodoUpdate";
+import { fetchTodos } from "./TodosService";
 
 
 const TodoBody = () => {
@@ -61,12 +61,10 @@ const TodoBody = () => {
                             <p className="font-semibold">{todo.time}</p>
                           </div>
                           <div className="flex justify-end gap-2 pb-3">
-                            <button onClick={()=>{}}>
-                              <MdDeleteOutline className="size-6" />
-                            </button>
-                            <button onClick={()=>{}}>
-                              <CiEdit className="size-6" />
-                            </button>
+                            
+                            <TodoDelete todoId={todo._id}/>
+                            <TodoUpdate todoId={todo._id} />
+
                           </div>
                         </div>
                         <TodoStatus todo={todo}/>
