@@ -11,7 +11,6 @@ const TodoDelete = ({ todoId }) => {
     e.preventDefault();
     try {
       const response = await deleteTodo(todoId);
-      console.log(response);
 
       setServerMsg(response.data.message);
       setStatus(response && response.status === 200 ? "success" : "error");

@@ -43,9 +43,9 @@ export async function deleteTodo(todoId) {
 }
 
 // Update a todo in backend
-export async function updateTodo(todoId, updateData) {
+export async function updateTodo(todoId, todoTitle, todoDesc) {
   try {
-    const data = qs.stringify(updateData);
+    const data = qs.stringify({ todoTitle, todoDesc });
     const response = await axios.put(
       `http://localhost:3000/todos/${todoId}`,
       data,
@@ -54,7 +54,7 @@ export async function updateTodo(todoId, updateData) {
         withCredentials: true,
       }
     );
-    return response.data;
+    return response;
   } catch (error) {
     throw error;
   }

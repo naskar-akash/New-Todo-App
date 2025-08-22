@@ -42,7 +42,7 @@ module.exports.updateTodos = async (req, res) => {
       {new: true});
 
     if(!updatedTodo) return res.status(404).json({ message: "Todo not found!" });
-    res.status(200).json({message: "Status Updated!"});
+    res.status(200).json({message: "Todo Updated Successfully!"});
   } catch (error) {
     res.status(400).json({ message: err.message });
   }
