@@ -26,7 +26,7 @@ module.exports.getTodos = async (req, res) => {
     const todos = await todoModel.find({ user: req.user._id });
     res.json(todos);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ message: err.message });
   }
 }
 

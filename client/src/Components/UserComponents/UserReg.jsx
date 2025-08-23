@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { use } from 'react'
 import { useState } from 'react';
 import { useForm } from "react-hook-form";
+import { registerUser } from './UserService';
 
 const UserReg = () => {
   const [serverMsg, setServerMsg] = useState();
@@ -22,24 +23,26 @@ const UserReg = () => {
 
   //submitting
   const onSubmit = async (data) => {
-
+    //simulate delay
     await delay(1);
-
-    const r = await fetch("http://localhost:3000/user/register", { 
-      method: "POST", 
-      headers: {"Content-Type": "application/json"}, 
-      body: JSON.stringify(data), 
-      credentials: "include"
-    });
-    const response = await r.json();
-
-    setServerMsg(response.message);
-    setStatus(r.ok ?"success":"error");
-
+    try {
+      const response = await registerUser(data.fullname, data.email, data.password);
+      setServerMsg(response.data.message);
+      setStatus(response.status === 201 ?"success":"error");
     //Hide message
-    setTimeout(()=>setServerMsg(""),4000);
+    setTimeout(()=>setServerMsg(""),2000);
+    } catch (error) {
+      if (error.response) {
+        setServerMsg(error.response.data.message);
+        setStatus(error.statusText);
+        //Hide message
+        setTimeout(()=>setServerMsg(""),2000); 
+      } else {
+        console.log(error);
+        
+      }
+    }
   };
-
   
   return (
     <div className="flex flex-col items-center w-full relative">
@@ -47,7 +50,7 @@ const UserReg = () => {
       {/*Showing flash message*/}
       {serverMsg && (<div className={`fixed top-[50%] p-6 rounded-lg shadow-lg shadow-zinc-500 text-white transition-transform duration-300 ${status === "success" ? "bg-emerald-500" : "bg-rose-500"}`} style={{left: "50%", transform: "translateX(-50%)"}}>{serverMsg}</div>)}
 
-      <h2 className="text-3xl font-bold mb-8 text-blue-600 font-serif">Create Account</h2>
+      <h2 className="text-2xl font-bold mb-6 text-blue-600 font-serif">Create Account</h2>
 
       <form
         className="flex flex-col gap-5 w-full max-w-md"

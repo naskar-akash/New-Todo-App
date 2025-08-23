@@ -2,15 +2,12 @@ import axios from "axios";
 import qs from "qs";
 
 // Fetch todos from backend
-export async function fetchTodos(token) {
+export async function fetchTodos() {
   try {
     const response = await axios.get("http://localhost:3000/todos/", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
       withCredentials: true,
     });
-    return response.data;
+    return response;
   } catch (error) {
     throw error;
   }

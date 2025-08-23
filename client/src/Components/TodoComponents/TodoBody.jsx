@@ -11,11 +11,8 @@ const TodoBody = () => {
   useEffect(() => {
    const response = async () => {
       try {
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFrYXNoQG1haWwuY29tIiwiaWQiOiI2ODk4YWZjN2U2N2ZmMmE0M2Q3Y2FjMDIiLCJpYXQiOjE3NTUwMTQxMjZ9.P2lHuB9HrvmqM27VezaZiBCP8G_5O3_jPPr4kGCUl2g";
-        if (token) {
-          const todosData = await fetchTodos(token);
-          setTodos(todosData);
-        }
+          const todosData = await fetchTodos();
+          setTodos(todosData.data);
       } catch (error) {
         console.error("Error fetching todos:", error);
       }
