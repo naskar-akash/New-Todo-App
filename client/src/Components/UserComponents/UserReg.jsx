@@ -2,10 +2,10 @@ import React, { use } from 'react'
 import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { registerUser } from './UserService';
+import AlertMsg from '../AlertMsg';
 
 const UserReg = () => {
-  const [serverMsg, setServerMsg] = useState();
-  const [status, setStatus] = useState();
+  const { serverMsg,status,showAlert } = AlertMsg(2);
   const {
     register,
     handleSubmit,
@@ -27,20 +27,9 @@ const UserReg = () => {
     await delay(1);
     try {
       const response = await registerUser(data.fullname, data.email, data.password);
-      setServerMsg(response.data.message);
-      setStatus(response.status === 201 ?"success":"error");
-    //Hide message
-    setTimeout(()=>setServerMsg(""),2000);
-    } catch (error) {
-      if (error.response) {
-        setServerMsg(error.response.data.message);
-        setStatus(error.statusText);
-        //Hide message
-        setTimeout(()=>setServerMsg(""),2000); 
-      } else {
-        console.log(error);
-        
-      }
+      showAlert(response,"success","error");
+    } catch (error) { 
+      showAlert(error.response || error,"success","error");
     }
   };
   
