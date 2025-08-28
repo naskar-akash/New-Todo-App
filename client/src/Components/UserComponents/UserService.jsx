@@ -65,3 +65,18 @@ export async function getCurrentUser() {
     throw error;
   }
 }
+
+//Get user profile by ID
+export async function getUserProfile() {
+  try {
+    const response = await axios.get(
+      `http://localhost:3000/user/profile`,
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

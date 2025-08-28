@@ -20,4 +20,7 @@ router.post("/logout", logoutUser);
 // Route to get current loggedin user details
 router.get("/me", isLoggedin, getCurrentUser);
 
+// Route to add user profile
+router.get("/profile", isLoggedin, getCurrentUser);
+
 module.exports = router;

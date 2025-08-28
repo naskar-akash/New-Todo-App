@@ -3,7 +3,7 @@ const userModel = require("../models/user-model");
 
 const isLoggedin = async (req, res, next) => {
     if(!req.cookies.token) {
-        return res.json({message:"Login first!"});
+        return res.status(200).json({message:"Login first!"});
     }
     try {
         let decoded = jwt.verify(req.cookies.token, process.env.JWT_KEY);
