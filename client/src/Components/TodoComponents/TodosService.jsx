@@ -56,3 +56,21 @@ export async function updateTodo(todoId, todoTitle, todoDesc) {
     throw error;
   }
 }
+
+// Update todo status in backend
+export async function updateTodoStatus(todoId, status) {
+  try {
+    const data = qs.stringify({ status });
+    const response = await axios.put(
+      `http://localhost:3000/todos/${todoId}`,
+      data,
+      {
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        withCredentials: true,
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}

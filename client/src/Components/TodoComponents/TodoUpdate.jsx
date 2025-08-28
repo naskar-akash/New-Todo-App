@@ -9,11 +9,11 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { updateTodo } from "./TodosService";
+import AlertMsg from "../AlertMsg";
 
 const TodoUpdate = ({ todoId }) => {
   const [open, setOpen] = useState(false);
-  const [serverMsg, setServerMsg] = useState();
-  const [status, setStatus] = useState();
+  const { serverMsg, status, showAlert } = AlertMsg(1);
 
   // React Hook Form setup
   const {
@@ -32,13 +32,10 @@ const TodoUpdate = ({ todoId }) => {
   const onSubmit = async (data) => {
     try {
       const response = await updateTodo(todoId, data.todoTitle, data.todoDesc);
-      setServerMsg(response.data.message);
-      setStatus(response && response.status === 200 ? "success" : "error");
-      //Hide message
-      setTimeout(() => setServerMsg(""), 1000);
+      showAlert(response,"success","error");
       setOpen(!open);
     } catch (error) {
-      console.error("Error updating todo:", error);
+      showAlert(error.response || error,"success","error");
     }
     reset();
   };
@@ -48,6 +45,7 @@ const TodoUpdate = ({ todoId }) => {
       <button onClick={handleEdit}>
         <CiEdit className="size-6" />
       </button>
+      {/* Showing flash message */}
       {serverMsg && (
         <div
           className={`fixed top-[50%] p-6 rounded-lg shadow-lg shadow-zinc-500 text-white transition-transform duration-300 ${

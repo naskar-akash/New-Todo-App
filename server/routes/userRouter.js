@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const {registerUser, loginUser, logoutUser} = require("../controllers/authControllers");
+const {registerUser, loginUser, logoutUser, getCurrentUser} = require("../controllers/authControllers");
+const { isLoggedin } = require("../middlewares/isLoggedin");
 
 
 router.get("/", (req, res) => {
@@ -15,5 +16,8 @@ router.post("/login", loginUser);
 
 // Route to logout the loggedin user
 router.post("/logout", logoutUser);
+
+// Route to get current loggedin user details
+router.get("/me", isLoggedin, getCurrentUser);
 
 module.exports = router;

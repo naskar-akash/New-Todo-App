@@ -1,12 +1,12 @@
 import React from "react";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoIosAddCircle } from "react-icons/io";
 import { addTodo } from "./TodosService";
+import AlertMsg from '../AlertMsg';
+import { useState } from "react";
 
 const TodoAdd = () => {
-  const [serverMsg, setServerMsg] = useState();
-  const [status, setStatus] = useState();
+  const { serverMsg,status,showAlert } = AlertMsg(2);
   const [showForm, setShowForm] = useState(false);
   const {
     register,
@@ -16,17 +16,18 @@ const TodoAdd = () => {
 
   //submitting
   const onSubmit = async (data) => {
-    const response = await addTodo(data.todoTitle, data.todoDesc);
-
-    setServerMsg(response.data.message);
-    setStatus(response && response.status === 201 ? "success" : "error");
-    setShowForm(!showForm);
-    //Hide message
-    setTimeout(() => setServerMsg(""), 1000);
+    try {
+      const response = await addTodo(data.todoTitle, data.todoDesc);
+      showAlert(response,"success","error");
+      setShowForm(false);
+    } catch (error) {
+      showAlert(error.response || error,"success","error");
+    }
   };
 
   return (
     <div>
+      {/*Showing flash message*/}
       {serverMsg && (
         <div
           className={`fixed top-[50%] p-6 rounded-lg shadow-lg shadow-zinc-500 text-white transition-transform duration-300 ${

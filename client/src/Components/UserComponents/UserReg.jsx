@@ -1,5 +1,4 @@
 import React, { use } from 'react'
-import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { registerUser } from './UserService';
 import AlertMsg from '../AlertMsg';

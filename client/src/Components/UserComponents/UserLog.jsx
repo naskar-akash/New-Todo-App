@@ -1,12 +1,11 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from './UserService';
+import AlertMsg from '../AlertMsg';
 
 const UserLog = () => {
-    const [serverMsg, setServerMsg] = useState();
-    const [status, setStatus] = useState();
+  const { serverMsg,status,showAlert } = AlertMsg(2);
     const navigate = useNavigate();
     const {
         register,
@@ -28,14 +27,10 @@ const UserLog = () => {
     await delay(1);
     try {
       const response = await loginUser(data.email, data.password);
-      setServerMsg(response.data.message);
-      setStatus(response.status === 201 ? "success": "error");
-      setTimeout(() => {
-        setServerMsg("");
-        navigate("/todos"); // redirect to todo page
-      }, 1500);      
+      showAlert(response,"success","error");
+      navigate("/todos");      
     } catch (error) {
-      console.log(error);
+      showAlert(error.response || error,"success","error");
     }
   };
 

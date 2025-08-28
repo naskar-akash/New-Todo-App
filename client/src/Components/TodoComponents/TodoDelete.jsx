@@ -1,28 +1,24 @@
 import React from "react";
-import { useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { deleteTodo } from "./TodosService";
+import AlertMsg from "../AlertMsg";
 
 const TodoDelete = ({ todoId }) => {
-  const [serverMsg, setServerMsg] = useState();
-  const [status, setStatus] = useState();
+  const { serverMsg, status, showAlert } = AlertMsg(1.5);
 
   const handleDelete = async (e) => {
     e.preventDefault();
     try {
       const response = await deleteTodo(todoId);
-
-      setServerMsg(response.data.message);
-      setStatus(response && response.status === 200 ? "success" : "error");
-      //Hide message
-      setTimeout(() => setServerMsg(""), 1000);
+      showAlert(response,"success","error");
     } catch (error) {
-      console.error("Error deleting todo:", error);
+      showAlert(error.response || error,"success","error");
     }
   };
 
   return (
     <div>
+      {/* Showing flash message */}
       {serverMsg && (
         <div
           className={`fixed top-[50%] p-6 rounded-lg shadow-lg shadow-zinc-500 text-white transition-transform duration-300 ${
