@@ -12,11 +12,11 @@ const todoSchema = new mongoose.Schema({
   },
   date: { 
     type: String, 
-    default: dateTime().date 
+    default: () => dateTime().date
   },
   time: { 
     type: String, 
-    default: dateTime().time 
+    default: () => dateTime().time
   },
   status: {
     type: String,

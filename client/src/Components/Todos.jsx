@@ -24,9 +24,9 @@ const Todos = () => {
 
   return (
     <div className='min-h-screen bg-gradient-to-b from-sky-800 to-blue-50'>
-      <div className="p-2">
-        <div className='flex justify-between gap-2 mb-4'>
-        <button className='px-3 py-2 bg-orange-700 text-white text-sm font-semibold rounded-md hover:cursor-pointer hover:bg-orange-600' onClick={() => navigate(-1)}>Back</button>
+      <div className="p-2 relative">
+        <div className='flex justify-between gap-2 px-6 items-center mb-4'>
+        <button className='px-4 py-2 bg-orange-700 text-white text-sm font-semibold rounded-md hover:cursor-pointer hover:bg-orange-600' onClick={() => navigate(-1)}>Back</button>
         <h2 className='text-2xl font-semibold py-2 bg-gradient-to-r from-emerald-300 via-rose-300 to-lime-200 bg-clip-text text-transparent'>Welcome, {fullName}</h2>
         <NavbarBtn/>
         </div>

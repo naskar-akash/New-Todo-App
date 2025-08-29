@@ -1,7 +1,8 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import {getUserProfile} from './UserService'
-import { useState,useEffect } from 'react';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { getUserProfile } from "./UserService";
+import { useState, useEffect } from "react";
+import NavbarBtn from "../NavComponents/NavbarBtn";
 
 const UserProfile = () => {
   const navigate = useNavigate();
@@ -20,18 +21,20 @@ const UserProfile = () => {
     fetchProfile();
   }, []);
 
-
   return (
-     <div className='min-h-screen bg-gradient-to-br from-slate-800 to-zinc-600 flex flex-col items-center py-10'>
-      <button
-        className='self-start px-3 py-2 my-2 mx-3 bg-orange-700 text-white text-sm font-semibold rounded-md hover:cursor-pointer hover:bg-orange-600'
-        onClick={() => navigate(-1)}
-      >
-        Back
-      </button>
-      <div className="bg-white/80 rounded-xl shadow-lg p-8 flex flex-col items-center w-full max-w-md mt-8">
+    <div className="min-h-screen bg-gradient-to-br from-neutral-600 to-slate-500 flex flex-col items-center py-10">
+      <div className="w-full flex justify-between px-6 items-center mb-4">
+        <button
+          className="px-4 py-2 bg-emerald-500 text-white text-base font-bold rounded-lg shadow transition-all hover:bg-emerald-400"
+          onClick={() => navigate(-1)}
+        >
+          Back
+        </button>
+        <NavbarBtn />
+      </div>
+      <div className="bg-white/90 rounded-3xl shadow-2xl p-10 flex flex-col items-center w-full max-w-md mt-8">
         {/* Profile Picture */}
-        <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-orange-300 shadow mb-4">
+        <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-orange-300 shadow-lg mb-4">
           {user?.profilePic ? (
             // If you store as URL or base64 string
             <img
@@ -47,19 +50,38 @@ const UserProfile = () => {
           )}
         </div>
         {/* User Info */}
-        <h2 className="text-2xl font-bold text-gray-800 mb-1">{user?.fullname || "Full Name"}</h2>
-        <p className="text-gray-600 mb-4">{user?.email || "Email"}</p>
+        <h2 className="text-3xl font-extrabold text-gray-800 mb-2 tracking-wide drop-shadow">
+          {user?.fullname || "Full Name"}
+        </h2>
+        <p className="text-lg text-gray-600 mb-4">{user?.email || "Email"}</p>
         {/* Add more user info here */}
-        <div className="w-full flex flex-col gap-2">
-          <div className="flex justify-between text-gray-700">
+        <div className="w-full flex flex-col gap-3">
+          <div className="flex justify-center gap-4 text-gray-700 text-base">
             <span className="font-semibold">Joined:</span>
-            <span>{user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : "N/A"}</span>
+            <span>
+              <span className="font-bold">{user?.date ? user.date : "N/A"}</span>
+              {" "}
+              <span className="text-gray-500">at</span>
+              {" "}
+              <span className="font-bold">{user?.time ? user.time : "N/A"}</span>
+            </span>
           </div>
           {/* Add more fields as needed */}
+        </div>
+        {/* Divider */}
+        <div className="w-full border-t border-orange-200 my-6"></div>
+        {/* Action Buttons (optional) */}
+        <div className="flex gap-4">
+          <button className="px-4 py-2 bg-gradient-to-r from-orange-400 to-pink-400 text-white rounded-lg font-semibold shadow hover:scale-105 transition-all">
+            Edit Profile
+          </button>
+          <button className="px-4 py-2 bg-gradient-to-r from-lime-400 to-green-400 text-white rounded-lg font-semibold shadow hover:scale-105 transition-all">
+            Change Picture
+          </button>
         </div>
       </div>
     </div>
   );
 };
 
-export default UserProfile
+export default UserProfile;
