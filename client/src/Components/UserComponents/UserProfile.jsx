@@ -1,4 +1,5 @@
 import React from "react";
+import { CiEdit } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from "./UserService";
 import { useState, useEffect } from "react";
@@ -21,6 +22,10 @@ const UserProfile = () => {
     fetchProfile();
   }, []);
 
+  const handleAddProfilePic = (e) => {
+    console.log(e.target.value);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-600 to-slate-500 flex flex-col items-center py-10">
       <div className="w-full flex justify-between px-6 items-center mb-4">
@@ -34,7 +39,7 @@ const UserProfile = () => {
       </div>
       <div className="bg-white/90 rounded-3xl shadow-2xl p-10 flex flex-col items-center w-full max-w-md mt-8">
         {/* Profile Picture */}
-        <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-orange-300 shadow-lg mb-4">
+        <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-orange-300 shadow-lg mb-4">
           {user?.profilePic ? (
             // If you store as URL or base64 string
             <img
@@ -48,29 +53,43 @@ const UserProfile = () => {
               {user?.fullname ? user.fullname[0].toUpperCase() : "?"}
             </div>
           )}
+
+          {/* Edit Icon */}
+          <div className="absolute bottom-3 right-3">
+        <CiEdit className="size-6 mr-5 pointer-events-none" />
+        <input
+          type="file"
+          name="profilePic"
+          accept="image/*"
+          onChange={handleAddProfilePic}
+          className="absolute inset-0 w-full h-full opacity-0 hover:cursor-pointer"
+        />
+      </div>
+          
         </div>
         {/* User Info */}
         <h2 className="text-3xl font-extrabold text-gray-800 mb-2 tracking-wide drop-shadow">
           {user?.fullname || "Full Name"}
         </h2>
         <p className="text-lg text-gray-600 mb-4">{user?.email || "Email"}</p>
-        {/* Add more user info here */}
+
         <div className="w-full flex flex-col gap-3">
           <div className="flex justify-center gap-4 text-gray-700 text-base">
             <span className="font-semibold">Joined:</span>
             <span>
-              <span className="font-bold">{user?.date ? user.date : "N/A"}</span>
-              {" "}
-              <span className="text-gray-500">at</span>
-              {" "}
-              <span className="font-bold">{user?.time ? user.time : "N/A"}</span>
+              <span className="font-bold">
+                {user?.date ? user.date : "N/A"}
+              </span>{" "}
+              <span className="text-gray-500">at</span>{" "}
+              <span className="font-bold">
+                {user?.time ? user.time : "N/A"}
+              </span>
             </span>
           </div>
-          {/* Add more fields as needed */}
         </div>
         {/* Divider */}
         <div className="w-full border-t border-orange-200 my-6"></div>
-        {/* Action Buttons (optional) */}
+        {/* Action Buttons */}
         <div className="flex gap-4">
           <button className="px-4 py-2 bg-gradient-to-r from-orange-400 to-pink-400 text-white rounded-lg font-semibold shadow hover:scale-105 transition-all">
             Edit Profile
