@@ -6,7 +6,11 @@ const userSchema = new mongoose.Schema({
   username: String,
   email: String,
   password: String,
-  profilepic: Buffer,
+  profilepic:  {
+    data: Buffer,
+    contentType: String,
+    name: String
+  },
   todos: [
       {
         type: mongoose.Schema.Types.ObjectId,

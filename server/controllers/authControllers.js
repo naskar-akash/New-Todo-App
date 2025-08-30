@@ -1,6 +1,8 @@
 const userModel = require("../models/user-model");
 const bcrypt = require("bcrypt");
+const crypto = require('crypto');
 const {generateToken} = require("../utils/generateToken");
+const path = require("path");
 
 module.exports.registerUser = async (req, res) => {
   try {
@@ -61,13 +63,56 @@ module.exports.logoutUser = async (req, res) => {
 
 module.exports.getCurrentUser = async (req, res) => {
   try {
-    const userId = req.user._id; // Assuming req.user is set by authentication middleware
-    const user = await userModel.findById(userId).select('-password'); // Exclude password field
+    const userId = req.user._id;
+    const user = await userModel.findById(userId).select('-password');
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    res.status(200).json(user);
+    const userObj = user.toObject();
+    if (user.profilepic?.data) {
+      userObj.profilepic = `data:${user.profilepic.contentType};base64,${user.profilepic.data.toString("base64")}`;
+    } else {
+      userObj.profilepic = null;
+    }
+    res.status(200).json(userObj);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+}
+
+module.exports.updateProfilePic = async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ message: "No file uploaded" });
+
+    const filename = crypto.randomBytes(16).toString("hex") + path.extname(req.file.originalname);
+    const updatedUser = await userModel.findByIdAndUpdate(
+      req.user._id,
+      {
+        profilepic: {
+          data: req.file.buffer,
+          contentType: req.file.mimetype,
+          name: filename
+        },
+      },
+      { new: true }
+    );
+
+    res.json({ message: "Profile pic updated", user: updatedUser._id });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+module.exports.deleteProfilePic = async (req, res) => {
+  try{
+    const user = await userModel.findById(req.user._id);
+    if(!user || !user.profilepic){
+      return res.status(404).json({message: "No profile picture to delete"});
+    }
+    user.profilepic = undefined;
+    await user.save();
+    res.status(200).json({message: "Profile picture deleted successfully"});
+  } catch (error) {
+     res.status(500).json({ message: error.message });
   }
 }

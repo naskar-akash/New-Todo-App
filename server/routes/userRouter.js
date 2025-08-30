@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const {registerUser, loginUser, logoutUser, getCurrentUser} = require("../controllers/authControllers");
+const upload = require("../config/multer-config");
+const {registerUser, loginUser, logoutUser, getCurrentUser,updateProfilePic,deleteProfilePic } = require("../controllers/authControllers");
 const { isLoggedin } = require("../middlewares/isLoggedin");
 
 
@@ -20,7 +21,13 @@ router.post("/logout", logoutUser);
 // Route to get current loggedin user details
 router.get("/me", isLoggedin, getCurrentUser);
 
-// Route to add user profile
+// Route to get user profile
 router.get("/profile", isLoggedin, getCurrentUser);
+
+// Route to update user profile picture
+router.post("/profile/pic", isLoggedin, upload.single("profilepic"), updateProfilePic);
+
+//Route to delete profile picture
+router.delete("/profile/pic", isLoggedin, deleteProfilePic);
 
 module.exports = router;

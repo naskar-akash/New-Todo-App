@@ -1,5 +1,6 @@
 import React from "react";
 import { CiEdit } from "react-icons/ci";
+import { MdDeleteOutline } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from "./UserService";
 import { useState, useEffect } from "react";
@@ -22,9 +23,30 @@ const UserProfile = () => {
     fetchProfile();
   }, []);
 
-  const handleAddProfilePic = (e) => {
-    console.log(e.target.value);
+  const handleAddProfilePic = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const formData = new FormData();
+    formData.append("profilepic", file);
+
+    const response = await fetch("http://localhost:3000/user/profile/pic", {
+      method: "POST",
+      body: formData,
+      credentials: "include",
+    });
+    const data = await response.json();
+    console.log(data);
   };
+
+  const handleRemoveProfilePic = async () => {
+    console.log("Remove profile picture");
+    const response = await fetch("http://localhost:3000/user/profile/pic", {
+      method: "DELETE",
+      credentials: "include",
+    });
+    const data = await response.json();
+    console.log(data);
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-600 to-slate-500 flex flex-col items-center py-10">
@@ -38,34 +60,42 @@ const UserProfile = () => {
         <NavbarBtn />
       </div>
       <div className="bg-white/90 rounded-3xl shadow-2xl p-10 flex flex-col items-center w-full max-w-md mt-8">
-        {/* Profile Picture */}
-        <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-orange-300 shadow-lg mb-4">
-          {user?.profilePic ? (
-            // If you store as URL or base64 string
-            <img
-              src={"user.profilePic"}
-              alt="Profile"
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            // Placeholder if no profile picture
-            <div className="w-full h-full flex items-center justify-center bg-orange-100 text-5xl text-orange-400">
-              {user?.fullname ? user.fullname[0].toUpperCase() : "?"}
-            </div>
-          )}
+        <div className="flex flex-col items-center gap-3 mb-5">
+          {/* Profile Picture */}
+          <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-orange-300 shadow-lg">
+            {user?.profilepic ? (
+              // If you store as URL or base64 string
+              <img
+                src={user.profilepic}
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              // Placeholder if no profile picture
+              <div className="w-full h-full flex items-center justify-center bg-orange-100 text-5xl text-orange-400">
+                {user?.fullname ? user.fullname[0].toUpperCase() : "?"}
+              </div>
+            )}
+          </div>
 
-          {/* Edit Icon */}
-          <div className="absolute bottom-3 right-3">
-        <CiEdit className="size-6 mr-5 pointer-events-none" />
-        <input
-          type="file"
-          name="profilePic"
-          accept="image/*"
-          onChange={handleAddProfilePic}
-          className="absolute inset-0 w-full h-full opacity-0 hover:cursor-pointer"
-        />
-      </div>
-          
+          <div className="flex items-center gap-5 justify-between">
+            {/* Edit Icon */}
+            <div className="flex items-center relative">
+              <CiEdit className="size-6 cursor-pointer font-bold" />
+              <input
+                type="file"
+                name="profilePic"
+                accept="image/*"
+                onChange={handleAddProfilePic}
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              />
+            </div>
+            <div className="flex items-center relative">
+              <button onClick={handleRemoveProfilePic}>
+                <MdDeleteOutline className="size-5" />
+              </button>
+            </div>
+          </div>
         </div>
         {/* User Info */}
         <h2 className="text-3xl font-extrabold text-gray-800 mb-2 tracking-wide drop-shadow">
