@@ -8,10 +8,10 @@ import { fetchTodos } from "./TodosService";
 const TodoBody = () => {
   const [todos, setTodos] = useState([]);
 
-  useEffect(() => {
+     useEffect(() => {
    const response = async () => {
       try {
-          const todosData = await fetchTodos();
+       const todosData = await fetchTodos();
           setTodos(todosData.data);
       } catch (error) {
         console.error("Error fetching todos:", error);

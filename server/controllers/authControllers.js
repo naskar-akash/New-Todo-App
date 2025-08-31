@@ -85,7 +85,7 @@ module.exports.updateProfilePic = async (req, res) => {
     if (!req.file) return res.status(400).json({ message: "No file uploaded" });
 
     const filename = crypto.randomBytes(16).toString("hex") + path.extname(req.file.originalname);
-    const updatedUser = await userModel.findByIdAndUpdate(
+    await userModel.findByIdAndUpdate(
       req.user._id,
       {
         profilepic: {
@@ -97,7 +97,7 @@ module.exports.updateProfilePic = async (req, res) => {
       { new: true }
     );
 
-    res.json({ message: "Profile pic updated", user: updatedUser._id });
+    res.status(200).json({ message: "Profile pic updated" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -80,3 +80,36 @@ export async function getUserProfile() {
     throw error;
   }
 }
+
+//Update user profile picture
+export async function updateProfilePic(file) {
+  try {
+    const formData = new FormData();
+    formData.append("profilepic", file);
+    const response = await axios.post(
+      "http://localhost:3000/user/profile/pic",
+      formData, 
+      {
+        withCredentials: true,
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Deleting user profile picture
+export async function deleteProfilePic() {
+  try {
+    const response = await axios.delete(
+      "http://localhost:3000/user/profile/pic",
+      {
+        withCredentials: true,
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}

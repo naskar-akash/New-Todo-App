@@ -2,13 +2,15 @@ import React from "react";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { getUserProfile } from "./UserService";
+import { getUserProfile,updateProfilePic,deleteProfilePic } from "./UserService";
 import { useState, useEffect } from "react";
 import NavbarBtn from "../NavComponents/NavbarBtn";
+import AlertMsg from "../AlertMsg";
 
 const UserProfile = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const { serverMsg, status, showAlert } = AlertMsg(2);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -26,29 +28,38 @@ const UserProfile = () => {
   const handleAddProfilePic = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const formData = new FormData();
-    formData.append("profilepic", file);
-
-    const response = await fetch("http://localhost:3000/user/profile/pic", {
-      method: "POST",
-      body: formData,
-      credentials: "include",
-    });
-    const data = await response.json();
-    console.log(data);
+    try {
+      const response = await updateProfilePic(file);
+      console.log(response);
+      showAlert(response || response.data,"success","error");
+    } catch (error) {
+      showAlert(error.response || error,"success","error");
+    }
   };
 
   const handleRemoveProfilePic = async () => {
-    console.log("Remove profile picture");
-    const response = await fetch("http://localhost:3000/user/profile/pic", {
-      method: "DELETE",
-      credentials: "include",
-    });
-    const data = await response.json();
-    console.log(data);
+    try {
+      const response = await deleteProfilePic();
+      console.log(response);
+      showAlert(response || response.data,"success","error");
+    } catch (error) {
+      showAlert(error.response || error,"success","error");
+    }
   }
 
   return (
+    <>
+    {/* Showing flash message */}
+      {serverMsg && (
+        <div
+          className={`fixed top-10 p-6 rounded-lg shadow-lg shadow-zinc-500 text-white transition-transform duration-300 ${
+            status === "success" ? "bg-green-500" : "bg-red-500"
+          }`}
+          style={{ left: "50%", transform: "translateX(-50%)" }}
+        >
+          {serverMsg}
+        </div>
+      )}
     <div className="min-h-screen bg-gradient-to-br from-neutral-600 to-slate-500 flex flex-col items-center py-10">
       <div className="w-full flex justify-between px-6 items-center mb-4">
         <button
@@ -130,6 +141,7 @@ const UserProfile = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
