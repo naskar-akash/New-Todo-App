@@ -4,10 +4,14 @@ import TodoAdd from "./TodoComponents/TodoAdd"
 import TodoBody from "./TodoComponents/TodoBody"
 import NavbarBtn from './NavComponents/NavbarBtn';
 import TodoFilter from './TodoComponents/TodoFilter';
+import {TodoContext} from './TodoContext';
 import { getCurrentUser } from './UserComponents/UserService';
+import { fetchTodos } from "./TodoComponents/TodosService";
 
 const Todos = () => {
   const navigate = useNavigate();
+  const [todos, setTodos] = useState([]);
+  const [filterTodos, setFilterTodos] = useState([]);
   const [fullName, setFullname] = useState("");
 
   useEffect(() => {
@@ -20,10 +24,25 @@ const Todos = () => {
       }
     };
     fetchUserName();
-  }, [])
+  }, []);
+
+  useEffect(() => {
+      const getTodo = async () => {
+        try {
+          const response = await fetchTodos();
+          const todoData = response.data;
+          setTodos(todoData);
+          setFilterTodos(todoData);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      getTodo();
+    }, []);
   
 
   return (
+    <TodoContext.Provider value={{ todos, filterTodos, setFilterTodos }}>
     <div className='min-h-screen bg-gradient-to-b from-sky-800 to-blue-50'>
       <div className="p-2 relative">
         <div className='flex justify-between gap-2 px-6 items-center mb-4'>
@@ -40,6 +59,7 @@ const Todos = () => {
       <TodoBody/>
     </div>
     </div>
+    </TodoContext.Provider>
   )
 }
 

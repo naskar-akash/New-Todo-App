@@ -2,33 +2,20 @@ import React, { useEffect, useState } from "react";
 import TodoDelete from "./TodoDelete";
 import TodoStatus from "./TodoStatus";
 import TodoUpdate from "./TodoUpdate";
-import { fetchTodos } from "./TodosService";
-
+import { useTodoContext } from "../TodoContext";
 
 const TodoBody = () => {
-  const [todos, setTodos] = useState([]);
-
-     useEffect(() => {
-   const response = async () => {
-      try {
-       const todosData = await fetchTodos();
-          setTodos(todosData.data);
-      } catch (error) {
-        console.error("Error fetching todos:", error);
-      }
-    }
-    response(); 
-  }, []);
+  const {filterTodos} = useTodoContext();
 
   return (
     <div className="overflow-y-auto max-h-[75vh]">
       <div className="flex flex-wrap justify-center gap-3">
-        {todos.length === 0 ? (
+        {filterTodos.length === 0 ? (
               <div className="flex justify-center text-2xl">
                 No Todos to Display
               </div>
             ) : (
-              todos.map((todo) => {
+              filterTodos.map((todo) => {
                 return(
                   <div
                     key={todo._id}
