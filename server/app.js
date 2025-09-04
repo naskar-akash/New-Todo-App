@@ -1,28 +1,32 @@
+const dotenv = require("dotenv");
+
+// Load correct .env file depending on NODE_ENV
+dotenv.config({
+  path: process.env.NODE_ENV === "production" ? ".env.production" : ".env.development"
+});
+
+require("./config/mongoose-connection");
 const express = require('express');
 const userRouter = require("./routes/userRouter");
 const todoRouter = require("./routes/todoRouter");
-const db = require("./config/mongoose-connection");
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser')
 const cors = require("cors")
-require("dotenv").config();
 const app = express();
+
 
 //middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: process.env.FRONTEND_URI, credentials: true }));
 app.use(bodyParser.json());
 
 //connecting routes
 app.use("/user", userRouter);
 app.use("/todos", todoRouter);
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`Example app listening on port ${process.env.PORT || 3000}`);
 })
 
-app.listen(process.env.PORT, () => {
-  console.log(`Example app listening on port ${process.env.PORT}`);
-})

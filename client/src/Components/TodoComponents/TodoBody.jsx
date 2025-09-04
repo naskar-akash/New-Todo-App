@@ -8,7 +8,7 @@ const TodoBody = () => {
   const {filterTodos} = useTodoContext();
 
   return (
-    <div className="overflow-y-auto max-h-[75vh]">
+    <div className="overflow-y-auto max-h-[80vh]">
       <div className="flex flex-wrap justify-center gap-3">
         {filterTodos.length === 0 ? (
               <div className="flex justify-center text-2xl">

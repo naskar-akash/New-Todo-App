@@ -1,10 +1,12 @@
 import axios from "axios";
 import qs from "qs";
 
+const API_URL ="http://localhost:3000";
+
 // Fetch todos from backend
 export async function fetchTodos() {
   try {
-    const response = await axios.get("http://localhost:3000/todos/", {
+    const response = await axios.get(`${API_URL}/todos/`, {
       withCredentials: true,
     });
     return response;
@@ -17,7 +19,7 @@ export async function fetchTodos() {
 export async function addTodo(todoTitle, todoDesc) {
   try {
     const data = qs.stringify({ todoTitle, todoDesc });
-    const response = await axios.post("http://localhost:3000/todos/", data, {
+    const response = await axios.post(`${API_URL}/todos/`, data, {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       withCredentials: true, // This sends the cookie (token)
     });
@@ -30,7 +32,7 @@ export async function addTodo(todoTitle, todoDesc) {
 // Delete a todo from backend
 export async function deleteTodo(todoId) {
   try {
-    const response = await axios.delete(`http://localhost:3000/todos/${todoId}`, {
+    const response = await axios.delete(`${API_URL}/todos/${todoId}`, {
       withCredentials: true,
     });
     return response;
@@ -44,7 +46,7 @@ export async function updateTodo(todoId, todoTitle, todoDesc) {
   try {
     const data = qs.stringify({ todoTitle, todoDesc });
     const response = await axios.put(
-      `http://localhost:3000/todos/${todoId}`,
+      `${API_URL}/todos/${todoId}`,
       data,
       {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -62,7 +64,7 @@ export async function updateTodoStatus(todoId, status) {
   try {
     const data = qs.stringify({ status });
     const response = await axios.put(
-      `http://localhost:3000/todos/${todoId}`,
+      `${API_URL}/todos/${todoId}`,
       data,
       {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },

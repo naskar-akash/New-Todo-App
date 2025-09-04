@@ -70,7 +70,7 @@ const UserProfile = () => {
         </button>
         <NavbarBtn />
       </div>
-      <div className="bg-white/90 rounded-3xl shadow-2xl p-10 flex flex-col items-center w-full max-w-md mt-8">
+      <div className="bg-white/90 rounded-3xl shadow-2xl p-10 flex flex-col items-center mt-8 mx-4 md:max-w-md">
         <div className="flex flex-col items-center gap-3 mb-5">
           {/* Profile Picture */}
           <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-orange-300 shadow-lg">
@@ -127,17 +127,6 @@ const UserProfile = () => {
               </span>
             </span>
           </div>
-        </div>
-        {/* Divider */}
-        <div className="w-full border-t border-orange-200 my-6"></div>
-        {/* Action Buttons */}
-        <div className="flex gap-4">
-          <button className="px-4 py-2 bg-gradient-to-r from-orange-400 to-pink-400 text-white rounded-lg font-semibold shadow hover:scale-105 transition-all">
-            Edit Profile
-          </button>
-          <button className="px-4 py-2 bg-gradient-to-r from-lime-400 to-green-400 text-white rounded-lg font-semibold shadow hover:scale-105 transition-all">
-            Change Picture
-          </button>
         </div>
       </div>
     </div>

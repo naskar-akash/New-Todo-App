@@ -40,7 +40,7 @@ const TodoAdd = () => {
       )}
 
       <button onClick={() => setShowForm(!showForm)}>
-        <IoIosAddCircle className="text-6xl m-1" />
+        <IoIosAddCircle className="text-5xl mx-2" />
       </button>
       {showForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">

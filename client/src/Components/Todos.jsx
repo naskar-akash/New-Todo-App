@@ -42,25 +42,49 @@ const Todos = () => {
   
 
   return (
-    <TodoContext.Provider value={{ todos, filterTodos, setFilterTodos }}>
-    <div className='min-h-screen bg-gradient-to-b from-sky-800 to-blue-50'>
-      <div className="p-2 relative">
-        <div className='flex justify-between gap-2 px-6 items-center mb-4'>
-        <button className='px-4 py-2 bg-orange-700 text-white text-sm font-semibold rounded-md hover:cursor-pointer hover:bg-orange-600' onClick={() => navigate(-1)}>Back</button>
-        <TodoFilter/>
-        <NavbarBtn/>
+  <TodoContext.Provider value={{ todos, filterTodos, setFilterTodos }}>
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-sky-800 to-blue-50">
+      
+      {/* Top Navigation */}
+      <header className="px-4 py-2">
+        <div className="flex flex-row justify-between items-center gap-3">
+          {/* Back Button - fixed width & left corner */}
+          <div className="self-start">
+            <button
+              className="px-4 py-2 bg-orange-700 text-white text-sm font-semibold rounded-md hover:bg-orange-600"
+              onClick={() => navigate(-1)}
+            >
+              Back
+            </button>
+          </div>
+
+          {/* Filters & Nav Buttons */}
+          <div className="flex flex-row justify-center sm:justify-end items-center gap-4">
+            <TodoFilter />
+            <NavbarBtn />
+          </div>
         </div>
-        <div className="flex flex-wrap justify-between items-center gap-4">
-        <h2 className='pl-4 text-2xl font-semibold py-2 bg-gradient-to-r from-emerald-300 via-rose-300 to-lime-200 bg-clip-text text-transparent'>Welcome, {fullName}</h2>
-        <div className="flex justify-center">
-          <TodoAdd/>
+      </header>
+
+      {/* Main Section */}
+      <main>
+        {/* Welcome */}
+        <div className="flex flex-row justify-between items-center mb-2 ml-4">
+          <h2 className="text-2xl font-semibold py-2 text-left bg-gradient-to-r from-emerald-300 via-rose-300 to-lime-200 bg-clip-text text-transparent">
+            Welcome, {fullName}
+          </h2>
+          <TodoAdd />
         </div>
-      </div>
-      <TodoBody/>
+
+        {/* Todo Body */}
+        <div className="px-2 py-4">
+          <TodoBody />
+        </div>
+      </main>
     </div>
-    </div>
-    </TodoContext.Provider>
-  )
+  </TodoContext.Provider>
+);
+
 }
 
 export default Todos
