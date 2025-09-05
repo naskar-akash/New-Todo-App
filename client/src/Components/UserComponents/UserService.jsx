@@ -1,12 +1,13 @@
 import axios from "axios";
 import qs from "qs";
+const SERVER_URL = import.meta.env.VITE_SERVER_URI;
 
 //Register a new user
 export async function registerUser(fullname, email, password) {
   try {
     const data = qs.stringify({ fullname, email, password });
     const response = await axios.post(
-      "http://localhost:3000/user/register",
+      `${SERVER_URL}/user/register`,
       data,
       {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -24,7 +25,7 @@ export async function loginUser(email, password) {
     try {
     const data = qs.stringify({ email, password });
     const response = await axios.post(
-      "http://localhost:3000/user/login",
+      `${SERVER_URL}/user/login`,
       data,
       {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -41,7 +42,7 @@ export async function loginUser(email, password) {
 export async function logoutUser() {
   try {
     const response = await axios.post(
-      "http://localhost:3000/user/logout",
+      `${SERVER_URL}/user/logout`,
       null, // No data needed for logout
       {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -57,7 +58,7 @@ export async function logoutUser() {
 // Get current logged-in user
 export async function getCurrentUser() {
   try {
-    const response = await axios.get("http://localhost:3000/user/me", {
+    const response = await axios.get(`${SERVER_URL}/user/me`, {
       withCredentials: true,
     });
     return response.data;
@@ -70,7 +71,7 @@ export async function getCurrentUser() {
 export async function getUserProfile() {
   try {
     const response = await axios.get(
-      `http://localhost:3000/user/profile`,
+      `${SERVER_URL}/user/profile`,
       {
         withCredentials: true,
       }
@@ -87,7 +88,7 @@ export async function updateProfilePic(file) {
     const formData = new FormData();
     formData.append("profilepic", file);
     const response = await axios.post(
-      "http://localhost:3000/user/profile/pic",
+      `${SERVER_URL}/user/profile/pic`,
       formData, 
       {
         withCredentials: true,
@@ -103,7 +104,7 @@ export async function updateProfilePic(file) {
 export async function deleteProfilePic() {
   try {
     const response = await axios.delete(
-      "http://localhost:3000/user/profile/pic",
+      `${SERVER_URL}/user/profile/pic`,
       {
         withCredentials: true,
       }

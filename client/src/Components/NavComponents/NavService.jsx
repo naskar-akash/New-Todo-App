@@ -4,7 +4,6 @@ import { logoutUser,getUserProfile } from '../UserComponents/UserService';
 import { fetchTodos } from '../TodoComponents/TodosService';
 import AlertMsg from '../AlertMsg';
 
-
 export default function useNavService() {
   const navigate = useNavigate();
   const { serverMsg, status, showAlert } = AlertMsg(2);

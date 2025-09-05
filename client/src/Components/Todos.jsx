@@ -43,7 +43,7 @@ const Todos = () => {
 
   return (
   <TodoContext.Provider value={{ todos, filterTodos, setFilterTodos }}>
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-sky-800 to-blue-50">
+    <div className="px-4 py-2 min-h-screen flex flex-col bg-gradient-to-b from-sky-800 to-blue-50">
       
       {/* Top Navigation */}
       <header className="px-4 py-2">
@@ -77,7 +77,7 @@ const Todos = () => {
         </div>
 
         {/* Todo Body */}
-        <div className="px-2 py-4">
+        <div className="px-6 py-2 md:px-4 md:py-2">
           <TodoBody />
         </div>
       </main>

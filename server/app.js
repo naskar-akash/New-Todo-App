@@ -13,6 +13,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser')
 const cors = require("cors")
 const app = express();
+console.log(process.env.FRONTEND_URI);
 
 
 //middlewares
