@@ -13,18 +13,8 @@ const UserLog = () => {
         formState: { errors, isSubmitting },
       } = useForm();
 
-      //delay function
-  const delay = (d) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve()
-      }, d*1000);
-    })
-  };
-
   //submitting
   const onSubmit = async (data) => {
-    await delay(1);
     try {
       const response = await loginUser(data.email, data.password);
       showAlert(response,"success","error");
