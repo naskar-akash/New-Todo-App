@@ -1,9 +1,9 @@
 const dotenv = require("dotenv");
-
-// Load correct .env file depending on NODE_ENV
-dotenv.config({
-  path: process.env.NODE_ENV === "production" ? ".env.production" : ".env.development"
-});
+dotenv.config();
+// // Load correct .env file depending on NODE_ENV
+// dotenv.config({
+//   path: process.env.NODE_ENV === "production" ? ".env.production" : ".env.development"
+// });
 
 require("./config/mongoose-connection");
 const express = require('express');
