@@ -19,7 +19,7 @@ export async function addTodo(todoTitle, todoDesc) {
   try {
     const data = qs.stringify({ todoTitle, todoDesc });
     const response = await axios.post(`${SERVER_URL}/todos/`, data, {
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
       withCredentials: true, // This sends the cookie (token)
     });
     return response;

@@ -10,7 +10,7 @@ export async function registerUser(fullname, email, password) {
       `${SERVER_URL}/user/register`,
       data,
       {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         withCredentials: true,
       }
     );
@@ -28,7 +28,7 @@ export async function loginUser(email, password) {
       `${SERVER_URL}/user/login`,
       data,
       {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         withCredentials: true,
       }
     );
@@ -45,7 +45,7 @@ export async function logoutUser() {
       `${SERVER_URL}/user/logout`,
       null, // No data needed for logout
       {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         withCredentials: true,
       }
     );
