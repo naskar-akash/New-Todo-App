@@ -10,12 +10,8 @@ const TodoBody = () => {
   return (
     <div className="overflow-y-auto max-h-[80vh]">
       <div className="flex flex-wrap justify-center gap-3">
-        {filterTodos.length === 0 ? (
-              <div className="flex justify-center text-2xl">
-                No Todos to Display
-              </div>
-            ) : (
-              filterTodos.map((todo) => {
+        {Array.isArray(filterTodos) && filterTodos.length > 0 ? (
+          filterTodos.map((todo) => {
                 return(
                   <div
                     key={todo._id}
@@ -57,6 +53,10 @@ const TodoBody = () => {
                   </div>
                 )
               })
+            ) : (
+              <div className="flex justify-center text-2xl">
+                No Todos to Display
+              </div>
             )}
       </div>
     </div>
