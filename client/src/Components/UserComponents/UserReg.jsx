@@ -40,6 +40,7 @@ const UserReg = () => {
           placeholder="fullname"
           {...register("fullname", {required: {value: true, message: "This field is required"}})}
           type="text"
+          name='fullname'
         />
         {errors.fullname && <div className="text-red-500 text-sm mt-1">{errors.fullname.message}</div> }
 
@@ -49,6 +50,7 @@ const UserReg = () => {
           placeholder="email"
           {...register("email", {required: {value: true, message: "This field is required"}})}
           type="email"
+          name='email'
         />
         {errors.email && <div className="text-red-500 text-sm mt-1">{errors.email.message}</div> }
 
@@ -58,6 +60,7 @@ const UserReg = () => {
           placeholder="password"
           {...register("password", {required: {value: true, message: "This field is required"}, minLength: {value: 8, message: "Password should contain minimum 8 characters"}})}
           type="password"
+          name='password'
         />
         {errors.password && <div className="text-red-500 text-sm mt-1">{errors.password.message}</div> }
 
@@ -66,6 +69,7 @@ const UserReg = () => {
           className="bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 transition-all text-md rounded-md disabled:bg-blue-300 disabled:cursor-not-allowed"
           type="submit"
           disabled={isSubmitting}
+          name='submit'
         />
       </form>
       <div className="text-orange-500 text-sm mt-4">

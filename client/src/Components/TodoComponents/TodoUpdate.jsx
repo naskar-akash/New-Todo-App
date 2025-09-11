@@ -88,6 +88,7 @@ const TodoUpdate = ({ todoId }) => {
                       },
                     })}
                     type="text"
+                    name="newtodoTitle"
                   />
                   {errors.todoTitle && (
                     <div className="text-red-500 text-sm mb-2">
@@ -105,6 +106,7 @@ const TodoUpdate = ({ todoId }) => {
                       },
                     })}
                     type="text"
+                    name="newtodoDesc"
                   />
                   {errors.todoDesc && (
                     <div className="text-red-500 text-sm mb-2">
@@ -117,6 +119,7 @@ const TodoUpdate = ({ todoId }) => {
                       type="submit"
                       value="Update"
                       disabled={isSubmitting}
+                      name="submit"
                     />
                     <button
                       type="button"

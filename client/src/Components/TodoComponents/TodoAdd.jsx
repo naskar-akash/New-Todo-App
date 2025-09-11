@@ -56,6 +56,7 @@ const TodoAdd = () => {
                 required: { value: true, message: "This field is required" },
               })}
               type="text"
+              name="todoTitle"
             />
             {errors.todoTitle && (
               <div className="text-red-500 text-sm mt-1">
@@ -74,6 +75,7 @@ const TodoAdd = () => {
                 },
               })}
               type="text"
+              name="todoDesc"
             />
             {errors.todoDesc && (
               <div className="text-red-500 text-sm mt-1">
@@ -85,6 +87,7 @@ const TodoAdd = () => {
               type="submit"
               value="Add"
               disabled={isSubmitting}
+              name="submit"
             />
             <button
               type="button"
